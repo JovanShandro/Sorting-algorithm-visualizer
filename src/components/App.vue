@@ -16,7 +16,7 @@
     <button @click="sort">Sort</button>
 
     <svg
-      width="500"
+      width="700"
       height="1300"
       fill="#000"
       :transform="'transform: translate(-50%)'"
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { bus } from '../eventBus';
 import {
   merge,
   selection,
@@ -51,10 +52,15 @@ export default {
       choice: "",
     };
   },
+  created() {
+    bus.$on('rerender', () => {
+      (this.rerender < 1000) ? this.rerender++ : this.rerender = 0;
+    });
+  },
   methods: {
     generateRandomArray() {
       for (let i = 0; i < this.array.length; i++) {
-        this.array[i] = Math.floor(Math.random() * 500 + 1);
+        this.array[i] = Math.floor(Math.random() * 700 + 1);
       }
       this.rerender++;
     },
