@@ -31,13 +31,24 @@
 </template>
 
 <script>
+import {
+  merge,
+  selection,
+  bubble,
+  quick,
+  heap,
+  counting,
+  insertion,
+  radix
+} from "../algorithms";
+
 export default {
   name: "App",
   data() {
     return {
       array: Array(100).fill(100),
       rerender: 0,
-      choice: ""
+      choice: "",
     };
   },
   methods: {
@@ -46,9 +57,20 @@ export default {
         this.array[i] = Math.floor(Math.random() * 500 + 1);
       }
       this.rerender++;
+    },
+    sort() {
+      switch (this.choice) {
+        case "0": merge(); break;
+        case "1": selection(); break;
+        case "2": bubble(); break;
+        case "3": quick(); break;
+        case "4": heap(); break;
+        case "5": counting(); break;
+        case "6": insertion(); break;
+        case "7": radix(); break;
+      }
     }
-  },
-  sort() {}
+  }
 };
 </script>
 
