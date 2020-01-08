@@ -1,2 +1,15 @@
+h1 {
+  text-align: center;
+}
 body {
-  background: green; }
+  position: relative;
+}
+text {
+  font-size: 10px;
+}
+svg {
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translate(-50%) rotate(-90deg);
+}
