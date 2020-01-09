@@ -45,7 +45,8 @@ export default {
     return {
       array: Array(100).fill(100),
       rerender: 0,
-      choice: ""
+      choice: "",
+      isSorting: false
     };
   },
   created() {
@@ -55,12 +56,16 @@ export default {
   },
   methods: {
     generateRandomArray() {
+      if(this.isSorting) return;
       for (let i = 0; i < this.array.length; i++) {
         this.array[i] = Math.floor(Math.random() * 700 + 1);
       }
       this.rerender++;
     },
     async sort() {
+      if(this.isSorting) return;
+      this.isSorting = true;
+      
       switch (this.choice) {
         case "0": await merge(this.array); break;
         case "1": await selection(this.array); break;
@@ -71,6 +76,7 @@ export default {
         case "6": await insertion(this.array); break;
         case "7": await radix(this.array); break;
       }
+      this.isSorting = false;
     }
   }
 };
