@@ -57,8 +57,19 @@ export function quick() {
   console.log("Quick Sort");
 }
 
-export function heap() {
-  console.log("Heap Sort");
+export async function heap(array) {
+  await build_max_heap(array);
+  // sort the heap
+  for (let i = array.length - 1; i >= 1; i--) {
+    const tmp = array[0];
+    array[0] = array[i];
+    array[i] = tmp;
+    heapsize--;
+    // update figure
+    bus.$emit("rerender");
+    await sleep(10);
+    await max_heapify(array, 0);
+  }
 }
 
 export function counting() {
@@ -92,6 +103,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// MERGE SORT
 function recursiveMerge(aux1, l, r, aux2, path) {
   if (l === r) return;
   const m = Math.floor(l + (r - l) / 2);
@@ -122,5 +134,41 @@ function mergeAndUpdatePath(aux1, l, m, r, aux2, path) {
   while (j <= r) {
     path.push([k, aux2[j]]);
     aux1[k++] = aux2[j++];
+  }
+}
+
+//HEAP SORT
+let heapsize;
+async function max_heapify(array, i) {
+  let [l, r] = [2 * i + 1, 2 * i + 2];
+  let largest;
+
+  if (l <= heapsize && array[l] > array[i]) {
+    largest = l;
+  } else largest = i;
+
+  if (r <= heapsize && array[r] > array[largest]) {
+    largest = r;
+  }
+
+  if (largest != i) {
+    // swap with largest child
+    const tmp = array[i];
+    array[i] = array[largest];
+    array[largest] = tmp;
+    // update figure
+    bus.$emit("rerender");
+    await sleep(10);
+    // recursive call on child
+    await max_heapify(array, largest);
+  }
+}
+
+// self explanatory
+async function build_max_heap(array) {
+  heapsize = array.length-1;
+  const N = Math.floor((array.length - 1) / 2);
+  for (let i = N; i >= 0; i--) {
+    await max_heapify(array, i);
   }
 }
