@@ -4,8 +4,25 @@ export function merge() {
   console.log("Merge Sort");
 }
 
-export function selection() {
-  console.log("Selection Sort");
+export async function selection(array) {
+  for(let startIndex = 0; startIndex < array.length-1; startIndex++) {
+    let minIndex = startIndex;
+    
+    // get min el in unsorted part
+    for(let i = startIndex + 1; i < array.length; i++) {
+      if(array[i] < array[minIndex])
+        minIndex = i;
+    }
+
+    // swap current with minimum
+    const tmp = array[startIndex];
+    array[startIndex] = array[minIndex];
+    array[minIndex] = tmp;
+
+    // show update 
+    bus.$emit('rerender');
+    await sleep(10);
+  }
 }
 
 export async function bubble(array) {

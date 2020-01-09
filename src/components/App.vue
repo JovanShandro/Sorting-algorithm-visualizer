@@ -66,7 +66,7 @@ export default {
     async sort() {
       switch (this.choice) {
         case "0": merge(); break;
-        case "1": selection(); break;
+        case "1": await selection(this.array); break;
         case "2": await bubble(this.array); break;
         case "3": quick(); break;
         case "4": heap(); break;
