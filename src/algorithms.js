@@ -56,8 +56,10 @@ export async function heap(array) {
   }
 }
 
-export function counting() {
-  console.log("Counting Sort");
+export async function counting(array) {
+  let max = Math.max(...array);
+  let min = Math.min(...array);
+  await countingHelper(array, min, max);
 }
 
 export async function insertion(array) {
@@ -168,6 +170,27 @@ async function Partition(array, p, r) {
   swap(array, i, p);
   await showUpdate();
   return i;
+}
+
+// COUNTING SORT
+async function countingHelper(array, min, max) {
+  let i = min, j = 0, count = [],
+    len = array.length;
+
+  for (i; i <= max; i++) {
+    count[i] = 0;
+  }
+  for (i = 0; i < len; i++) {
+    count[array[i]] += 1;
+  }
+  for (i = min; i <= max; i++) {
+    while (count[i] > 0) {
+      array[j++] = i;
+      count[i]--;
+      await showUpdate();
+    }
+  }
+  return array;
 }
 
 // GENERAL PURPOSE

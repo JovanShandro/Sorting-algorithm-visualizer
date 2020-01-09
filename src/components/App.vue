@@ -67,7 +67,7 @@ export default {
         case "2": await bubble(this.array); break;
         case "3": await quick(this.array); break;
         case "4": await heap(this.array); break;
-        case "5": counting(); break;
+        case "5": await counting(this.array); break;
         case "6": await insertion(this.array); break;
         case "7": radix(); break;
       }
