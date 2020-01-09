@@ -69,7 +69,7 @@ export default {
         case "4": await heap(this.array); break;
         case "5": await counting(this.array); break;
         case "6": await insertion(this.array); break;
-        case "7": radix(); break;
+        case "7": await radix(this.array); break;
       }
     }
   }

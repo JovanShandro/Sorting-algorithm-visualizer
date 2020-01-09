@@ -2,7 +2,7 @@ import { bus } from "./eventBus";
 
 export async function merge(array) {
   const path = [];
-  recursiveMerge(array.slice(), 0, array.length - 1, array.slice(), path);
+  mergeHelper(array.slice(), 0, array.length - 1, array.slice(), path);
 
   for (let i = 0; i < path.length; i++) {
     // update array and show change
@@ -76,8 +76,28 @@ export async function insertion(array) {
   }
 }
 
-export function radix() {
-  console.log("Radix Sort");
+export async function radix(array) {
+  let max = 0;
+  // get maximum length of all elements of the array
+  for (let i = 0; i<array.length; i++) {
+      if (max < array[i].toString().length) {
+          max = array[i].toString().length
+      }
+  }
+  for (let i = 0; i < max; i++) {
+    // Generate buckets
+    let buckets = Array.from({ length: 10 }, () => [ ])
+    for (let j = 0; j < array.length; j++) {
+      buckets[digit(array[j], i)].push(array[j]);
+    }
+    // concatinate all buckest
+    let allbuckets  = [ ].concat(...buckets);
+    // to make sure we don't dereference array
+    for(let i = 0; i < array.length; i++){
+      array[i] = allbuckets[i];
+      await showUpdate();
+    }
+  }
 }
 
 /*
@@ -85,11 +105,11 @@ export function radix() {
 */
 
 // MERGE SORT
-function recursiveMerge(aux1, l, r, aux2, path) {
+function mergeHelper(aux1, l, r, aux2, path) {
   if (l === r) return;
   const m = Math.floor(l + (r - l) / 2);
-  recursiveMerge(aux2, l, m, aux1, path);
-  recursiveMerge(aux2, m + 1, r, aux1, path);
+  mergeHelper(aux2, l, m, aux1, path);
+  mergeHelper(aux2, m + 1, r, aux1, path);
   mergeAndUpdatePath(aux1, l, m, r, aux2, path);
 }
 
@@ -151,13 +171,13 @@ async function build_max_heap(array) {
 //QUICK SORT
 async function quickHelper(array, p, r) {
   if (p <= r) {
-    const q = await Partition(array, p, r);
+    const q = await partition(array, p, r);
     await quickHelper(array, p, q - 1);
     await quickHelper(array, q + 1, r);
   }
 }
 
-async function Partition(array, p, r) {
+async function partition(array, p, r) {
   let pivot = array[p];
   let i = p;
   for (let j = p + 1; j <= r; j++) {
@@ -208,4 +228,8 @@ function sleep(ms) {
 async function showUpdate() {
   bus.$emit("rerender");
   await sleep(10);
+}
+
+function digit(n, pos){
+  return  Math.floor(Math.abs(n) / Math.pow(10, pos)) % 10;
 }
