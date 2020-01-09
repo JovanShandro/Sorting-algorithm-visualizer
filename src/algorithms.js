@@ -8,8 +8,25 @@ export function selection() {
   console.log("Selection Sort");
 }
 
-export function bubble() {
-  console.log("Bubble Sort");
+export async function bubble(array) {
+  let exchanged = true;
+  let bottom = array[array.length-2];
+  while(exchanged) {
+    exchanged = false;
+    for(let i = 0; i<=bottom; i++) {
+      if(array[i] > array[i+1]) {
+        exchanged = true;
+        const tmp = array[i];
+        array[i] = array[i+1];
+        array[i+1] = tmp;
+        // show update 
+        bus.$emit('rerender');
+        await sleep(10);
+      }
+    }
+    bottom--;
+  }
+  console.log(array);
 }
 
 export function quick() {
