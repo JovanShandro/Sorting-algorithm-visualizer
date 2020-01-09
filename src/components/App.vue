@@ -65,7 +65,7 @@ export default {
         case "0": await merge(this.array); break;
         case "1": await selection(this.array); break;
         case "2": await bubble(this.array); break;
-        case "3": quick(); break;
+        case "3": await quick(this.array); break;
         case "4": await heap(this.array); break;
         case "5": counting(); break;
         case "6": await insertion(this.array); break;

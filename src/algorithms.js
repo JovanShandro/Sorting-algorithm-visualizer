@@ -7,28 +7,20 @@ export async function merge(array) {
   for (let i = 0; i < path.length; i++) {
     // update array and show change
     array[path[i][0]] = path[i][1];
-    bus.$emit("rerender");
-    await sleep(10);
+    await showUpdate();
   }
 }
 
 export async function selection(array) {
   for (let startIndex = 0; startIndex < array.length - 1; startIndex++) {
     let minIndex = startIndex;
-
     // get min el in unsorted part
     for (let i = startIndex + 1; i < array.length; i++) {
       if (array[i] < array[minIndex]) minIndex = i;
     }
-
     // swap current with minimum
-    const tmp = array[startIndex];
-    array[startIndex] = array[minIndex];
-    array[minIndex] = tmp;
-
-    // show update
-    bus.$emit("rerender");
-    await sleep(10);
+    swap(array, startIndex, minIndex);
+    await showUpdate();
   }
 }
 
@@ -40,34 +32,26 @@ export async function bubble(array) {
     for (let i = 0; i <= bottom; i++) {
       if (array[i] > array[i + 1]) {
         exchanged = true;
-        const tmp = array[i];
-        array[i] = array[i + 1];
-        array[i + 1] = tmp;
-        // show update
-        bus.$emit("rerender");
-        await sleep(10);
+        swap(array, i, i + 1);
+        await showUpdate();
       }
     }
     bottom--;
   }
-  console.log(array);
 }
 
-export function quick() {
-  console.log("Quick Sort");
+export async function quick(array) {
+  await quickHelper(array, 0, array.length - 1);
 }
 
 export async function heap(array) {
   await build_max_heap(array);
   // sort the heap
   for (let i = array.length - 1; i >= 1; i--) {
-    const tmp = array[0];
-    array[0] = array[i];
-    array[i] = tmp;
+    swap(array, 0, i);
     heapsize--;
     // update figure
-    bus.$emit("rerender");
-    await sleep(10);
+    await showUpdate();
     await max_heapify(array, 0);
   }
 }
@@ -83,11 +67,10 @@ export async function insertion(array) {
     while (j >= 0 && key < array[j]) {
       array[j + 1] = array[j];
       j--;
-      bus.$emit("rerender");
-      await sleep(10);
+      await showUpdate();
     }
     array[j + 1] = key;
-    bus.$emit("rerender");
+    await showUpdate();
   }
 }
 
@@ -98,10 +81,6 @@ export function radix() {
 /*
   Help functions
 */
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 // MERGE SORT
 function recursiveMerge(aux1, l, r, aux2, path) {
@@ -152,23 +131,58 @@ async function max_heapify(array, i) {
   }
 
   if (largest != i) {
-    // swap with largest child
-    const tmp = array[i];
-    array[i] = array[largest];
-    array[largest] = tmp;
-    // update figure
-    bus.$emit("rerender");
-    await sleep(10);
-    // recursive call on child
+    swap(array, i, largest);
+    await showUpdate();
     await max_heapify(array, largest);
   }
 }
 
 // self explanatory
 async function build_max_heap(array) {
-  heapsize = array.length-1;
+  heapsize = array.length - 1;
   const N = Math.floor((array.length - 1) / 2);
   for (let i = N; i >= 0; i--) {
     await max_heapify(array, i);
   }
+}
+
+//QUICK SORT
+async function quickHelper(array, p, r) {
+  if (p <= r) {
+    const q = await Partition(array, p, r);
+    await quickHelper(array, p, q - 1);
+    await quickHelper(array, q + 1, r);
+  }
+}
+
+async function Partition(array, p, r) {
+  let pivot = array[p];
+  let i = p;
+  for (let j = p + 1; j <= r; j++) {
+    if (array[j] < pivot) {
+      i++;
+      swap(array, i, j);
+      await showUpdate();
+    }
+  }
+  swap(array, i, p);
+  await showUpdate();
+  return i;
+}
+
+// GENERAL PURPOSE
+
+function swap(array, i, j) {
+  const tmp = array[i];
+  array[i] = array[j];
+  array[j] = tmp;
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function showUpdate() {
+  bus.$emit("rerender");
+  await sleep(10);
 }
