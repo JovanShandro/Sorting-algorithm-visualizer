@@ -5,14 +5,14 @@ const { HotModuleReplacementPlugin } = require('webpack');
 
 module.exports = {
     mode: process.env.NODE_ENV,
-    entry: join(__dirname, 'src', 'app.js'),
+    entry: ['@babel/polyfill', join(__dirname, 'src', 'app.js')],
     output: {
         path: join(__dirname, 'build'),
         filename: 'app.bundled.js',
         publicPath: '/build'
     },
     devServer: {
-        port: 3000,
+        port: process.env.PORT || 3000,
         hot: true,
         open: true,
         historyApiFallback: true // index.html will be served instead of 404 responses

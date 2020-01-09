@@ -19,7 +19,6 @@
       width="700"
       height="1300"
       fill="#000"
-      :transform="'transform: translate(-50%)'"
       :key="rerender"
     >
       <g v-for="(value, i) in array" :key="i" :transform="`translate(0, ${i * 13})`">
@@ -64,7 +63,7 @@ export default {
       }
       this.rerender++;
     },
-    sort() {
+    async sort() {
       switch (this.choice) {
         case "0": merge(); break;
         case "1": selection(); break;
@@ -72,7 +71,7 @@ export default {
         case "3": quick(); break;
         case "4": heap(); break;
         case "5": counting(); break;
-        case "6": insertion(); break;
+        case "6": await insertion(this.array); break;
         case "7": radix(); break;
       }
     }
