@@ -1,26 +1,28 @@
 <template>
   <div>
-    <h1>Visualize your favourite sorting algorithm</h1>
-    <div class="center">
-      <button @click="generateRandomArray">Random</button>
-      <select v-model="choice">
-        <option disabled value>Select the Algorithm</option>
-        <option value="0">Merge Sort</option>
-        <option value="1">Selection Sort</option>
-        <option value="2">Bubble Sort</option>
-        <option value="3">Quick Sort</option>
-        <option value="4">Heap Sort</option>
-        <option value="5">Counting Sort</option>
-        <option value="6">Insertion Sort</option>
-        <option value="7">Radix Sort</option>
-      </select>
-      <button @click="sort">Sort</button>
-    </div>
+    <nav>
+      <h3>Visualize your favourite sorting algorithm</h3>
+      <span>
+        <button @click="generateRandomArray">Generate Random Numbers</button>
+        <select v-model="choice">
+          <option disabled value>Select the Algorithm</option>
+          <option value="0">Merge Sort</option>
+          <option value="1">Selection Sort</option>
+          <option value="2">Bubble Sort</option>
+          <option value="3">Quick Sort</option>
+          <option value="4">Heap Sort</option>
+          <option value="5">Counting Sort</option>
+          <option value="6">Insertion Sort</option>
+          <option value="7">Radix Sort</option>
+        </select>
+        <button @click="sort">Sort</button>
+      </span>
+    </nav>
 
     <svg width="700" height="1300" fill="#000" :key="rerender">
       <g v-for="(value, i) in array" :key="i" :transform="`translate(0, ${i * 13})`">
-        <rect height="10" :width="value" fill="#523456" />
-        <text fill="#ffffff" x="5" y="10">{{ value }}</text>
+        <rect height="10" :width="value" fill="#5b0466" />
+        <text fill="#ffffff" :x="value < 20 ? '0' : '5'" y="10">{{ value }}</text>
       </g>
     </svg>
   </div>

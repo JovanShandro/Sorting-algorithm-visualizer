@@ -1,19 +1,60 @@
-h1 {
-  text-align: center;
-}
+nav {
+  background-color: #5b0466; }
+  nav:after {
+    content: "";
+    display: block;
+    clear: both; }
+  nav span {
+    float: right; }
+    nav span * {
+      color: white;
+      background: none;
+      border: none;
+      text-transform: uppercase;
+      height: 50.1px;
+      margin: 0 10px;
+      cursor: pointer; }
+      nav span *:hover {
+        color: #a5a2a2; }
+      nav span *::-moz-focus-inner {
+        border: 0; }
+    nav span select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      color: rgba(255, 255, 255, 0);
+      text-shadow: 0 0 0 #fff;
+      text-align: center; }
+      nav span select:active, nav span select:focus {
+        color: rgba(0, 0, 0, 0);
+        text-shadow: 0 0 0 #fff; }
+  nav h3 {
+    margin: 15px;
+    font-size: 1.6rem;
+    float: left;
+    color: white; }
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  /* rem set to 10px for simplicity */
+  font-size: 62.5%; }
+
 body {
-  position: relative;
-}
-text {
-  font-size: 10px;
-}
+  box-sizing: border-box;
+  position: relative; }
+
 svg {
   position: absolute;
-  top: -80%;
+  top: -100%;
   left: 50%;
-  transform: translate(-50%) rotate(-90deg);
-}
-.center {
-  display: flex;
-  justify-content: center;
-}
+  transform: translate(-50%) rotate(-90deg); }
+
+text {
+  font-size: 10px;
+  font-weight: bold; }

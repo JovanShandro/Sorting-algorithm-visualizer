@@ -1,0 +1,11 @@
+svg {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translate(-50%) rotate(-90deg);
+}
+
+text {
+    font-size: 10px;
+    font-weight: bold;
+}
