@@ -3,22 +3,24 @@
     <nav>
       <h3>Visualize your favourite sorting algorithm</h3>
       <span>
-        <button @click="generateRandomArray">Generate Random Numbers</button>
+        <button :class="{disabled: isSorting}" @click="generateRandomArray">Generate Random Numbers</button>
         <select v-model="choice">
           <option disabled value>Select the Algorithm</option>
-          <option value="0">Merge Sort</option>
-          <option value="1">Selection Sort</option>
-          <option value="2">Bubble Sort</option>
-          <option value="3">Quick Sort</option>
-          <option value="4">Heap Sort</option>
-          <option value="5">Counting Sort</option>
-          <option value="6">Insertion Sort</option>
-          <option value="7">Radix Sort</option>
+          <option value="merge">Merge Sort</option>
+          <option value="selection">Selection Sort</option>
+          <option value="bubble">Bubble Sort</option>
+          <option value="quick">Quick Sort</option>
+          <option value="heap">Heap Sort</option>
+          <option value="counting">Counting Sort</option>
+          <option value="insertion">Insertion Sort</option>
+          <option value="radix">Radix Sort</option>
         </select>
-        <button @click="sort">Sort</button>
+        <button :class="{disabled: isSorting}" @click="sort">Sort</button>
       </span>
     </nav>
-
+      
+    <h3 id="mainText" v-text="mainText"></h3>
+    
     <svg width="700" height="1300" fill="#000" :key="rerender">
       <g v-for="(value, i) in array" :key="i" :transform="`translate(0, ${i * 13})`">
         <rect height="10" :width="value" fill="#5b0466" />
@@ -45,10 +47,11 @@ export default {
   name: "App",
   data() {
     return {
-      array: Array(100).fill(100),
+      array: Array(100).fill(400),
       rerender: 0,
       choice: "",
-      isSorting: false
+      isSorting: false,
+      mainText: 'Welcome to The Sorting Algorithm Visualizer'
     };
   },
   created() {
@@ -68,16 +71,20 @@ export default {
       if(this.isSorting) return;
       this.isSorting = true;
       
+      this.mainText ='Performing ' + this.choice[0].toUpperCase() + this.choice.slice(1) + ' Sort.';
+
       switch (this.choice) {
-        case "0": await merge(this.array); break;
-        case "1": await selection(this.array); break;
-        case "2": await bubble(this.array); break;
-        case "3": await quick(this.array); break;
-        case "4": await heap(this.array); break;
-        case "5": await counting(this.array); break;
-        case "6": await insertion(this.array); break;
-        case "7": await radix(this.array); break;
+        case "merge": await merge(this.array); break;
+        case "selection": await selection(this.array); break;
+        case "bubble": await bubble(this.array); break;
+        case "quick": await quick(this.array); break;
+        case "heap": await heap(this.array); break;
+        case "counting": await counting(this.array); break;
+        case "insertion": await insertion(this.array); break;
+        case "radix": await radix(this.array); break;
       }
+      this.mainText = 'Pick a Sorting Algorithm and Visualize it!'
+
       this.isSorting = false;
     }
   }

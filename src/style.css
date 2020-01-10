@@ -34,6 +34,9 @@ nav {
     float: left;
     color: white; }
 
+.disabled {
+  color: #a5a2a2; }
+
 *,
 *::before,
 *::after {
@@ -51,10 +54,22 @@ body {
 
 svg {
   position: absolute;
-  top: -100%;
+  top: -50%;
   left: 50%;
   transform: translate(-50%) rotate(-90deg); }
 
 text {
   font-size: 10px;
   font-weight: bold; }
+
+#mainText {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 50px;
+  color: transparent;
+  background: #C589C9;
+  background: -webkit-linear-gradient(left, #C589C9, #9F06B5);
+  background: -moz-linear-gradient(left, #C589C9, #9F06B5);
+  background: linear-gradient(to right, #C589C9, #9F06B5);
+  background-clip: text;
+  -webkit-background-clip: text; }

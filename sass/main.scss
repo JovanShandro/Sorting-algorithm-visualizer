@@ -3,4 +3,16 @@
 @import './base';
 @import './figure';
   
+#mainText {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-top: 50px;
+    color: transparent;
+    background: #C589C9;
+    background: -webkit-linear-gradient(left, #C589C9, #9F06B5);
+    background: -moz-linear-gradient(left, #C589C9, #9F06B5);
+    background: linear-gradient(to right, #C589C9, #9F06B5);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
   
