@@ -11,3 +11,5 @@ npm run dev
 # build for production
 npm run build
 ```
+
+**Or play directly with it**:  [Click Me](https://stupefied-mahavira-9e156e.netlify.com/)
