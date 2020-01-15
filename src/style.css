@@ -13,7 +13,8 @@ nav {
       text-transform: uppercase;
       height: 50.1px;
       margin: 0 10px;
-      cursor: pointer; }
+      cursor: pointer;
+      outline: none; }
       nav span *:hover {
         color: #a5a2a2; }
       nav span *::-moz-focus-inner {
@@ -24,7 +25,13 @@ nav {
       appearance: none;
       color: rgba(255, 255, 255, 0);
       text-shadow: 0 0 0 #fff;
-      text-align: center; }
+      text-align: center;
+      text-align-last: center;
+      width: 175px; }
+      nav span select option {
+        background-color: black;
+        text-transform: capitalize;
+        color: white; }
       nav span select:active, nav span select:focus {
         color: rgba(0, 0, 0, 0);
         text-shadow: 0 0 0 #fff; }
