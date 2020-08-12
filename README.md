@@ -1,4 +1,6 @@
-# A Sorting Algorithms' Visualizer build using Vue.js
+# A Sorting Algorithms' Visualizer built using Vue.js
+Make sure to check it on a big screen (not on mobile) as it was built
+desktop first.
 
 ## Build Setup
 
